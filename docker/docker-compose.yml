@@ -6,7 +6,8 @@ services:
     - 8000:80
     - 8080:8080
     volumes:
-      - statsd-storage:/opt/graphite/storage
+      - graphite-storage:/opt/graphite/storage
+      - ../statsd/config/:/opt/statsd/config/:ro
   app:
     build:
       dockerfile: docker/Dockerfile
@@ -24,6 +25,8 @@ services:
     - 3000:3000
     volumes:
       - grafana-storage:/var/lib/grafana
+    depends_on:
+    - statsd
 volumes:
-  statsd-storage:
+  graphite-storage:
   grafana-storage:
