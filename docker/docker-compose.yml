@@ -1,13 +1,4 @@
 services:
-  statsd:
-    image: graphiteapp/graphite-statsd
-    ports:
-    - 8126:8126
-    - 8000:80
-    - 8080:8080
-    volumes:
-      - graphite-storage:/opt/graphite/storage
-      - ../statsd/config/:/opt/statsd/config/:ro
   app:
     build:
       dockerfile: docker/Dockerfile
@@ -19,6 +10,20 @@ services:
       STATSD_ADDR: statsd:8125
     depends_on:
     - statsd
+  statsd:
+    image: graphiteapp/graphite-statsd
+    ports:
+    - 8126:8126
+    - 8000:80
+    - 8080:8080
+    volumes:
+      - graphite-storage:/opt/graphite/storage
+      - ../statsd/config/:/opt/statsd/config/:ro
+  prometheus:
+    image: prom/prometheus
+    volumes:
+    - prometheus-storage:/prometheus
+    - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
   grafana:
     image: grafana/grafana
     ports:
@@ -30,3 +35,4 @@ services:
 volumes:
   graphite-storage:
   grafana-storage:
+  prometheus-storage:
