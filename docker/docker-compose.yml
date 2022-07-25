@@ -19,11 +19,18 @@ services:
     volumes:
       - graphite-storage:/opt/graphite/storage
       - ../statsd/config/:/opt/statsd/config/:ro
+  statsd-exporter:
+    image: prom/statsd-exporter
+    # ports:
+    # 9125 StatsD
+    # 9102 Prometheus
   prometheus:
     image: prom/prometheus
     volumes:
     - prometheus-storage:/prometheus
     - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+    - statsd-exporter
   grafana:
     image: grafana/grafana
     ports:
