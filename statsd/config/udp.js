@@ -5,5 +5,8 @@
   "flushInterval": 10000,
   "servers": [
     { server: "./servers/udp", address: "0.0.0.0", port: 8125 }
-  ]
+  ],
+  "backends": [ "./backends/repeater", "./backends/graphite" ],
+  "repeater": [ { host: 'statsd-exporter', port: 9125 } ],
+  "repeaterProtocol": "udp",
 }

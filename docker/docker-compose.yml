@@ -21,9 +21,8 @@ services:
       - ../statsd/config/:/opt/statsd/config/:ro
   statsd-exporter:
     image: prom/statsd-exporter
-    # ports:
-    # 9125 StatsD
-    # 9102 Prometheus
+    ports:
+    - 9102:9102 # Prometheus
   prometheus:
     image: prom/prometheus
     volumes:
@@ -31,6 +30,8 @@ services:
     - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
     - statsd-exporter
+    ports:
+    - 9090:9090
   grafana:
     image: grafana/grafana
     ports:
