@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+# workaround for Docker logger
+# if RbConfig::CONFIG['host_os'] == 'linux' then
+#     $stdout = File.open '/proc/self/fd/1', 'wt'
+#     $stderr = File.open '/proc/self/fd/2', 'wt'
+# end
+
+require_relative '../src/cycle_generator.rb'
+
+CycleGenerator.run
